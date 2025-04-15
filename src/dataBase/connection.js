@@ -13,6 +13,7 @@ const config = {
     queueLimit: 0,
 };
 
+
 /* 
     -queueLimit-
     O número máximo de solicitações de conexão que o pool enfileirará 
