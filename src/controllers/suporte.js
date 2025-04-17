@@ -3,10 +3,22 @@ const db = require('../dataBase/connection');
 module.exports = {
     async listarSuporte(request, response) {
         try {
+
+            const sql =`
+            SELECT 
+            sup_id, usu_id, asst_id, sup_mensagem, sup_status, sup_data_criacao, sup_email, sup_nome 
+            FROM SUPORTE;
+            `;
+             
+            const [rows]= await db.query(sql)
+
+            const nRegistros =rows.length;
+
+
             return response.status(200).json({
                 sucesso: true, 
                 mensagem: 'Lista de Suporte', 
-                dados: null
+                dados: rows
             });
         } catch (error) {
             return response.status(500).json({
