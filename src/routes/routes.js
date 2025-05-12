@@ -5,7 +5,7 @@ const SuporteController = require('../controllers/suporte');
 
 router.get('/suporte', SuporteController.listarSuporte); 
 router.post('/suporte', SuporteController.cadastrarSuporte); 
-router.patch('/suporte', SuporteController.editarSuporte); 
+router.patch('/suporte/:usu_id', SuporteController.editarSuporte); 
 router.delete('/suporte', SuporteController.apagarSuporte); 
 
 

@@ -86,6 +86,8 @@ const sql = `
         usu_id = ?, asst_id = ?, sup_mensagem = ?, sup_status = ?, sup_data_criacao = ?, sup_email = ? , sup_nome = ?
     WHERE
         usu_id = ?`;
+        
+        ;
 
 
 const values = [ usu_id, asst_id, sup_mensagem, sup_status, sup_data_criacao, sup_email, sup_nome];
@@ -99,7 +101,7 @@ if (result.affectedRows == 0) {
         dados: null
     });
 
-}
+};
     const dados = {
         id: result.insertId,
         usu_id,
