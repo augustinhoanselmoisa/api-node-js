@@ -130,6 +130,19 @@ if (result.affectedRows == 0) {
     }, 
     async apagarSuporte(request, response) {
         try {
+            const { usu_id } = request.params;
+
+const sql = `DELETE FROM suporte WHERE usu_id = ?`;
+const values = [usu_id];
+const [result] = await db.query(sql, values);
+
+if (result.affectedRows === 0) {
+    return res.status(404).json({
+        sucesso: false,
+        mensagem: `Usuário ${usu_id} não encontrado!`,
+        dados: null
+    });
+}
             return response.status(200).json({
                 sucesso: true, 
                 mensagem: 'Exclusão de Suporte', 
