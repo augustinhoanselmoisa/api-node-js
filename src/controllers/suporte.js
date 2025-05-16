@@ -80,19 +80,37 @@ const dados = {
 const { usu_id, asst_id, sup_mensagem, sup_status, sup_data_criacao, sup_email, sup_nome} = request.body;
 
 const { id } = request.params;
-
-const sql = `
-    UPDATE suporte SET
-        usu_id = ?, asst_id = ?, sup_mensagem = ?, sup_status = ?, sup_data_criacao = ?, sup_email = ? , sup_nome = ?
-    WHERE
-        usu_id = ?`;
-        
-        ;
-
-
-const values = [ usu_id, asst_id, sup_mensagem, sup_status, sup_data_criacao, sup_email, sup_nome];
-
+const sql = `   
+UPDATE suporte
+SET
+    usu_id = ?,
+    asst_id = ?,
+    sup_mensagem = ?,
+    sup_status = ?,
+    sup_data_criacao = ?,
+    sup_email = ?,
+    sup_nome = ?
+WHERE
+    sup_id = ?;
+`;
+const values = [ usu_id, asst_id, sup_mensagem, sup_status, sup_data_criacao, sup_email, sup_nome, id ];
 const [result] = await db.query(sql, values);
+// Verifica se o usuário foi encontrado
+if (result.affectedRows == 0) {
+    return response.status(404).json({
+        sucesso: false,
+        mensagem: `Usuário ${id} não encontrado!`,
+        dados: null
+    });
+}
+// Verifica se a atualização foi realizada
+if (result.affectedRows == 0) {
+    return response.status(404).json({
+        sucesso: false,
+        mensagem: `Usuário ${id} não encontrado!`,
+        dados: null
+    });
+}
 
 if (result.affectedRows == 0) {
     return response.status(404).json({
@@ -130,17 +148,17 @@ if (result.affectedRows == 0) {
     }, 
     async apagarSuporte(request, response) {
         try {
-            const { id } = request.params;
+            const { usu_id } = request.params;
             const sql = `
             DELETE FROM suporte
             WHERE usu_id = ?;
             `;
-            const values = [ id ];
+            const values = [ usu_id ];
             const [result] = await db.query(sql, values);
             if (result.affectedRows == 0) {
                 return response.status(404).json({
                     sucesso: false,
-                    mensagem: `Usuário ${id} não encontrado!`,
+                    mensagem: `Usuário ${usu_id} não encontrado!`,
                     dados: null
                 });
             };
